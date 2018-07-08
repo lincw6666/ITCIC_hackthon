@@ -126,35 +126,16 @@ def obj_detection(img, process, GOIN, isLeft):
     xmin = get_data[2][1]*width
     ymax = get_data[2][2]*height
     xmax = get_data[2][3]*width
+    obj = str(get_data[0])
     if 1 <= get_data[0] <= 4 and get_data[1] > 0.5 and GOIN == True and (xmax - xmin) >= 50 and (ymax - ymin) >= 50:
       print("x: ",xmax - xmin)
       print("y: ",ymax - ymin)
       if isLeft:
-        if get_data[0] == 1:
-          process = subprocess.Popen(["python", "googleSpeech.py", "1", "2"])
-          conn.send("1,2".encode())
-        if get_data[0] == 2:
-          process = subprocess.Popen(["python", "googleSpeech.py", "2", "2"])
-          conn.send("2,2".encode())
-        if get_data[0] == 3:
-          process = subprocess.Popen(["python", "googleSpeech.py", "3", "2"])
-          conn.send("3,2".encode())
-        if get_data[0] == 4:
-          process = subprocess.Popen(["python", "googleSpeech.py", "4", "2"])
-          conn.send("4,2".encode())
+        process = subprocess.Popen(["python", "googleSpeech.py", obj, "2"])
+        conn.send((obj+",2").encode())
       else:
-        if get_data[0] == 1:
-          process = subprocess.Popen(["python", "googleSpeech.py", "1", "1"])
-          conn.send("1,1".encode())
-        if get_data[0] == 2:
-          process = subprocess.Popen(["python", "googleSpeech.py", "2", "1"])
-          conn.send("2,1".encode())
-        if get_data[0] == 3:
-          process = subprocess.Popen(["python", "googleSpeech.py", "3", "1"])
-          conn.send("3,1".encode())
-        if get_data[0] == 4:
-          process = subprocess.Popen(["python", "googleSpeech.py", "4", "1"])
-          conn.send("4,1".encode())
+        process = subprocess.Popen(["python", "googleSpeech.py", obj, "1"])
+        conn.send((obj+",1").encode())
       GOIN = False
       break
   else:
